@@ -2,6 +2,18 @@
 
 A simple FastAPI service that intelligently routes chat requests between different LLaMA 3.2 models via Ollama based on query type and latency requirements.
 
+## 🚀 Live Demo
+
+**Try it now**: [https://your-app.railway.app](https://your-app.railway.app) (Mock Mode)
+
+> **Note**: The live demo uses simulated responses to showcase the routing logic. For real LLM responses, run locally with Ollama.
+
+### Test the Demo
+- Try **creative queries**: "Write a story about a robot" → Routes to Creative model
+- Try **factual queries**: "What is the capital of France?" → Routes to Fast model
+- Enable **"Fast" latency hint** → Always routes to Fast model
+- Watch the **routing decisions** and **response times** in the UI
+
 ## Features
 
 - **Intelligent Routing**: Automatically selects optimal models based on content analysis
@@ -26,12 +38,16 @@ A simple FastAPI service that intelligently routes chat requests between differe
 
 ## Quick Start
 
-### Prerequisites
+### 🌐 Option 1: Test Online (Mock Mode)
+Visit the [live demo](https://your-app.railway.app) to test the routing logic with simulated responses.
 
+### 🖥️ Option 2: Run Locally with Real LLMs
+
+#### Prerequisites
 - Docker and Docker Compose
 - Or: Python 3.8+, Node.js 18+, and Ollama
 
-### Option 1: Docker Compose (Recommended)
+#### Docker Setup (Recommended)
 
 ```bash
 # Start all services
@@ -47,14 +63,15 @@ docker-compose up -d
 # Grafana: http://localhost:3001
 ```
 
-### Option 2: Local Development
+#### Manual Setup
 
 ```bash
 # 1. Start Ollama
 ollama serve
 ollama pull llama3.2:1b
 
-# 2. Start Backend
+# 2. Start Backend (disable mock mode)
+export MOCK_MODE=false  # Enable real LLMs
 pip install -r requirements.txt
 python main.py
 
@@ -63,6 +80,8 @@ cd frontend
 npm install
 npm run dev
 ```
+
+> **Important**: Set `MOCK_MODE=false` to use real Ollama models instead of mock responses.
 
 ## Usage
 
