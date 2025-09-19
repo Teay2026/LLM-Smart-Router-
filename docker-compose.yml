@@ -1,0 +1,68 @@
+version: '3.8'
+
+services:
+  llm-router:
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./config.yaml:/app/config.yaml
+    depends_on:
+      - ollama
+    networks:
+      - llm-network
+    environment:
+      - PYTHONPATH=/app
+
+  ollama:
+    image: ollama/ollama:latest
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    networks:
+      - llm-network
+    environment:
+      - OLLAMA_HOST=0.0.0.0
+    # Auto-pull models on startup
+    command: sh -c "ollama serve & sleep 10 && ollama pull llama3.2:1b && wait"
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    depends_on:
+      - llm-router
+    networks:
+      - llm-network
+
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    networks:
+      - llm-network
+
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3001:3000"  # Changed to avoid conflict with frontend
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    volumes:
+      - ./grafana/datasources.yml:/etc/grafana/provisioning/datasources/datasources.yml
+      - ./grafana/dashboards.yml:/etc/grafana/provisioning/dashboards/dashboards.yml
+      - ./grafana/dashboard.json:/var/lib/grafana/dashboards/dashboard.json
+    networks:
+      - llm-network
+
+volumes:
+  ollama_data:
+
+networks:
+  llm-network:
+    driver: bridge
