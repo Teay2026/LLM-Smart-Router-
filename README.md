@@ -1,0 +1,222 @@
+# LLM Smart Router
+
+A simple FastAPI service that intelligently routes chat requests between different LLaMA 3.2 models via Ollama based on query type and latency requirements.
+
+## Features
+
+- **Intelligent Routing**: Automatically selects optimal models based on content analysis
+- **Query Type Detection**: Routes creative vs factual queries to appropriate models
+- **Latency Optimization**: Fast model selection for time-sensitive requests
+- **Real-time Metrics**: Prometheus integration for monitoring
+- **Web Interface**: React frontend for testing and interaction
+
+## Architecture
+
+```
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│   React App     │───▶│  FastAPI Router │───▶│     Ollama      │
+│  (Frontend)     │    │   (Backend)     │    │  (LLaMA 3.2)    │
+└─────────────────┘    └─────────────────┘    └─────────────────┘
+```
+
+## Models
+
+- **LLaMA 3.2 1B Fast**: Optimized for quick factual responses (low temperature)
+- **LLaMA 3.2 1B Creative**: Higher temperature for creative tasks
+
+## Quick Start
+
+### Prerequisites
+
+- Docker and Docker Compose
+- Or: Python 3.8+, Node.js 18+, and Ollama
+
+### Option 1: Docker Compose (Recommended)
+
+```bash
+# Start all services
+docker-compose up -d
+
+# The router will automatically pull llama3.2:1b model
+# Wait for initial model download (can take 5-10 minutes)
+
+# Access the application
+# Frontend: http://localhost:3000
+# API: http://localhost:8000
+# Metrics: http://localhost:9090
+# Grafana: http://localhost:3001
+```
+
+### Option 2: Local Development
+
+```bash
+# 1. Start Ollama
+ollama serve
+ollama pull llama3.2:1b
+
+# 2. Start Backend
+pip install -r requirements.txt
+python main.py
+
+# 3. Start Frontend
+cd frontend
+npm install
+npm run dev
+```
+
+## Usage
+
+### Web Interface
+Visit http://localhost:3000 to test the router with different query types.
+
+### API Example
+
+```bash
+curl -X POST "http://localhost:8000/route/chat" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "messages": [{"role": "user", "content": "Write a haiku about coding"}],
+    "latency_hint": "normal"
+  }'
+```
+
+**Response:**
+```json
+{
+  "model_selected": "llama3.2-1b-creative",
+  "completion": "Code flows like water\nLogic dancing with pixels\nBugs become features",
+  "meta": {
+    "reason": "creative+preferred",
+    "latency_ms": 1250,
+    "queue_depth": 0
+  }
+}
+```
+
+## Routing Logic
+
+- **Creative queries** ("write", "story", "poem") → Creative model (higher temperature)
+- **Fast requests** (`latency_hint=fast`) → Fast model
+- **Factual queries** ("what", "when", "where") → Fast model
+- **Fallback**: Fast model if creative model is overloaded
+
+## Configuration
+
+Edit `config.yaml` to customize:
+
+```yaml
+models:
+  llama3.2-1b-fast:
+    endpoint: "http://localhost:11434/api/chat"
+    model_name: "llama3.2:1b"
+    max_queue_depth: 10
+
+  llama3.2-1b-creative:
+    endpoint: "http://localhost:11434/api/chat"
+    model_name: "llama3.2:1b"
+    max_queue_depth: 8
+
+routing:
+  keywords:
+    creative: ["story", "creative", "write", "poem"]
+    factual: ["what", "when", "where", "who"]
+  fallback_model: "llama3.2-1b-fast"
+```
+
+## API Endpoints
+
+### POST /route/chat
+
+Route a chat request to the appropriate model.
+
+**Request:**
+```json
+{
+  "messages": [{"role": "user", "content": "Your question here"}],
+  "latency_hint": "fast|normal",
+  "priority": "low|normal|high"
+}
+```
+
+**Response:**
+```json
+{
+  "model_selected": "llama3.2-1b-creative",
+  "completion": "The AI response...",
+  "meta": {
+    "reason": "creative+preferred",
+    "latency_ms": 432,
+    "queue_depth": 1
+  }
+}
+```
+
+### GET /metrics
+
+Prometheus-format metrics including:
+- `llm_routing_decisions_total`: Count of routing decisions by model/reason
+- `llm_request_duration_seconds`: Request latency histogram
+- `llm_queue_depth`: Current queue depth per model
+- `llm_errors_total`: Error count by model/type
+
+### GET /healthz
+
+Simple health check endpoint.
+
+## Monitoring
+
+- **Prometheus**: http://localhost:9090 - Metrics collection
+- **Grafana**: http://localhost:3001 - Dashboard visualization (admin/admin)
+
+## Development
+
+```bash
+# Format code (optional)
+black src/
+isort src/
+
+# Type checking (optional)
+mypy src/
+```
+
+## Deployment Variants
+
+- `docker-compose.yml` - Full production setup with monitoring
+- `docker-compose.ollama-tiny.yml` - Minimal Ollama-only setup
+- `docker-compose.simple.yml` - Mock mode for testing
+
+## Performance
+
+- **Latency**: ~200-800ms per request
+- **Throughput**: ~10-50 requests/second (depending on hardware)
+- **Memory**: ~2-4GB for LLaMA 3.2 1B models
+
+## Project Structure
+
+```
+llm-smart-router/
+├── src/
+│   ├── api.py          # FastAPI app and endpoints
+│   ├── router.py       # Routing logic
+│   ├── config.py       # Configuration management
+│   └── metrics.py      # Prometheus metrics
+├── frontend/           # React web interface
+├── grafana/            # Grafana configuration
+├── config.yaml         # Main configuration
+└── docker-compose.yml  # Full stack deployment
+```
+
+## Contributing
+
+1. Fork the repository
+2. Create feature branch
+3. Add tests
+4. Submit pull request
+
+## License
+
+MIT License
+
+## Tags
+
+`llm` `routing` `fastapi` `react` `typescript` `ollama` `llama` `ai` `machine-learning` `microservices` `prometheus` `grafana` `docker`

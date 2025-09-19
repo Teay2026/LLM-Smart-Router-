@@ -1,0 +1,27 @@
+models:
+  llama3.2-1b-fast:
+    endpoint: "http://localhost:11434/api/chat"
+    cost_per_token: 0.0001
+    max_queue_depth: 10
+    preferred_for: ["fast", "simple"]
+    model_name: "llama3.2:1b"
+
+  llama3.2-1b-creative:
+    endpoint: "http://localhost:11434/api/chat"
+    cost_per_token: 0.0001
+    max_queue_depth: 8
+    preferred_for: ["creative", "complex", "reasoning"]
+    model_name: "llama3.2:1b"
+
+routing:
+  keywords:
+    creative: ["story", "creative", "imagine", "write", "poem", "song", "fictional"]
+    factual: ["fact", "what", "when", "where", "who", "definition", "explain"]
+    summarization: ["summary", "summarize", "briefly", "tldr", "overview"]
+
+  fallback_model: "llama3.2-1b-fast"
+  timeout_seconds: 30
+  max_retries: 2
+
+metrics:
+  port: 9090

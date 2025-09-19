@@ -1,0 +1,34 @@
+version: '3.8'
+
+# Ollama-based setup that works on Apple Silicon
+services:
+  llm-router:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - MOCK_MODE=false
+      - LOG_LEVEL=INFO
+    volumes:
+      - ./config.yaml:/app/config.yaml
+    depends_on:
+      - ollama
+    networks:
+      - llm-network
+
+  # Single Ollama service with both models
+  ollama:
+    image: ollama/ollama:latest
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    networks:
+      - llm-network
+
+volumes:
+  ollama_data:
+
+networks:
+  llm-network:
+    driver: bridge
