@@ -98,8 +98,8 @@ class LLMRouter:
         start_time = time.time()
 
         try:
-            # Use mock mode only if explicitly enabled
-            if os.getenv("MOCK_MODE", "false").lower() == "true":
+            # Use mock mode by default in hosted environments
+            if self.config.is_mock_mode:
                 await asyncio.sleep(random.uniform(0.1, 0.5))
                 completion = self._generate_mock_response(model_name, messages[-1]['content'])
                 return {

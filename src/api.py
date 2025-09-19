@@ -106,4 +106,23 @@ async def get_metrics():
 
 @app.get("/healthz")
 async def health_check():
-    return {"status": "healthy"}
+    return {
+        "status": "healthy",
+        "mode": "mock" if config.is_mock_mode else "live",
+        "note": "This is a demo version running in mock mode. For real LLM responses, run locally with Ollama." if config.is_mock_mode else "Running with real LLM models"
+    }
+
+@app.get("/")
+async def root():
+    return {
+        "service": "LLM Smart Router",
+        "version": "1.0.0",
+        "mode": "mock" if config.is_mock_mode else "live",
+        "message": "🚀 Demo version running in mock mode! This showcases the routing logic with simulated responses." if config.is_mock_mode else "Live version with real LLM models",
+        "local_setup": "To run with real models locally: set MOCK_MODE=false and ensure Ollama is running" if config.is_mock_mode else None,
+        "endpoints": {
+            "chat": "/route/chat",
+            "health": "/healthz",
+            "metrics": "/metrics"
+        }
+    }

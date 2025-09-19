@@ -53,6 +53,12 @@ const ChatInterface = () => {
       <div className="header">
         <h1>LLM Smart Router</h1>
         <p>Test intelligent routing between LLaMA 3.2 models via Ollama (1B fast vs 3B creative)</p>
+        <div className="demo-notice">
+          <span className="demo-badge">🚀 DEMO MODE</span>
+          <span className="demo-text">
+            This is a hosted demo with mock responses. For real LLM responses, run locally with Ollama.
+          </span>
+        </div>
       </div>
 
       <form onSubmit={handleSubmit} className="chat-form">

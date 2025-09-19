@@ -1,4 +1,5 @@
 import yaml
+import os
 from pathlib import Path
 from typing import Dict, List, Any
 
@@ -35,3 +36,8 @@ class Config:
     @property
     def metrics_port(self) -> int:
         return self._config.get('metrics', {}).get('port', 9090)
+
+    @property
+    def is_mock_mode(self) -> bool:
+        # Default to mock mode in production/hosted environments
+        return os.environ.get('MOCK_MODE', 'true').lower() == 'true'

@@ -25,6 +25,38 @@
   margin: 0;
 }
 
+.demo-notice {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 1rem;
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(135deg, #fef3c7, #fed7aa);
+  border: 2px solid #f59e0b;
+  border-radius: 8px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.demo-badge {
+  background: #f59e0b;
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.demo-text {
+  color: #92400e;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
 .chat-form {
   background: white;
   border-radius: 12px;
