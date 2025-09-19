@@ -206,6 +206,24 @@ llm-smart-router/
 └── docker-compose.yml  # Full stack deployment
 ```
 
+## 🚀 Hosted Demo
+
+**Try it live**: [Deploy on Railway](https://railway.app) (free hosting)
+
+The hosted demo runs in **mock mode** with simulated responses to showcase the routing logic. For real LLM responses, run locally with Ollama.
+
+### Deploy to Railway
+
+1. Fork this repository
+2. Go to [railway.app](https://railway.app) and sign up
+3. Click "New Project" → "Deploy from GitHub repo"
+4. Select your forked repository
+5. Railway will auto-deploy using the included configuration
+
+The app will be available at `https://your-app-name.railway.app`
+
+**Note**: The hosted version uses mock responses. Set `MOCK_MODE=false` locally for real LLM responses.
+
 ## Contributing
 
 1. Fork the repository
