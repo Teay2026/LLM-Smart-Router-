@@ -206,17 +206,6 @@ llm-smart-router/
 └── docker-compose.yml  # Full stack deployment
 ```
 
-## Contributing
-
-1. Fork the repository
-2. Create feature branch
-3. Add tests
-4. Submit pull request
-
-## License
-
-MIT License
-
 ## Tags
 
 `llm` `routing` `fastapi` `react` `typescript` `ollama` `llama` `ai` `machine-learning` `microservices` `prometheus` `grafana` `docker`
