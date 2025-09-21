@@ -15,12 +15,40 @@
   ],
   "routes": [
     {
-      "src": "/api/(.*)",
+      "src": "/route/(.*)",
       "dest": "/api/index.py"
     },
     {
+      "src": "/metrics",
+      "dest": "/api/index.py"
+    },
+    {
+      "src": "/healthz",
+      "dest": "/api/index.py"
+    },
+    {
+      "src": "/api",
+      "dest": "/api/index.py"
+    },
+    {
+      "src": "/static/(.*)",
+      "dest": "/frontend/dist/assets/$1"
+    },
+    {
+      "src": "/assets/(.*)",
+      "dest": "/frontend/dist/assets/$1"
+    },
+    {
+      "src": "/favicon.ico",
+      "dest": "/frontend/dist/favicon.ico"
+    },
+    {
+      "src": "/",
+      "dest": "/frontend/dist/index.html"
+    },
+    {
       "src": "/(.*)",
-      "dest": "/frontend/$1"
+      "dest": "/frontend/dist/index.html"
     }
   ],
   "env": {
