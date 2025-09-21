@@ -6,8 +6,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "type-check": "tsc --noEmit",
-    "vercel-build": "vite build"
+    "type-check": "tsc --noEmit"
   },
   "dependencies": {
     "react": "^18.2.0",

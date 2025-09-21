@@ -112,7 +112,7 @@ async def health_check():
         "note": "This is a demo version running in mock mode. For real LLM responses, run locally with Ollama." if config.is_mock_mode else "Running with real LLM models"
     }
 
-@app.get("/api")
+@app.get("/")
 async def root():
     return {
         "service": "LLM Smart Router",

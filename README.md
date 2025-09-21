@@ -2,17 +2,6 @@
 
 A simple FastAPI service that intelligently routes chat requests between different LLaMA 3.2 models via Ollama based on query type and latency requirements.
 
-## 🚀 Live Demo
-
-**Try it now**: [https://your-app.vercel.app](https://your-app.vercel.app) (Mock Mode)
-
-> **Note**: The live demo uses simulated responses to showcase the routing logic. For real LLM responses, run locally with Ollama.
-
-### Test the Demo
-- Try **creative queries**: "Write a story about a robot" → Routes to Creative model
-- Try **factual queries**: "What is the capital of France?" → Routes to Fast model
-- Enable **"Fast" latency hint** → Always routes to Fast model
-- Watch the **routing decisions** and **response times** in the UI
 
 ## Features
 
@@ -38,10 +27,7 @@ A simple FastAPI service that intelligently routes chat requests between differe
 
 ## Quick Start
 
-### 🌐 Option 1: Test Online (Mock Mode)
-Visit the [live demo](https://your-app.railway.app) to test the routing logic with simulated responses.
-
-### 🖥️ Option 2: Run Locally with Real LLMs
+### 🖥️ Run Locally
 
 #### Prerequisites
 - Docker and Docker Compose
@@ -225,33 +211,6 @@ llm-smart-router/
 └── docker-compose.yml  # Full stack deployment
 ```
 
-## 🚀 Hosted Demo
-
-**Try it live**: Deploy on [Vercel](https://vercel.com) (free hosting)
-
-The hosted demo runs in **mock mode** with simulated responses to showcase the routing logic. For real LLM responses, run locally with Ollama.
-
-### Deploy to Vercel
-
-1. Fork this repository
-2. Go to [vercel.com](https://vercel.com) and sign up
-3. Click "New Project" → "Import" from GitHub
-4. Select your forked repository
-5. Vercel will auto-deploy using the included `vercel.json` configuration
-
-The app will be available at `https://your-app-name.vercel.app`
-
-**Note**: The hosted version uses mock responses. Set `MOCK_MODE=false` locally for real LLM responses.
-
-### Alternative: Deploy to Railway
-
-You can also deploy to Railway:
-
-1. Fork this repository
-2. Go to [railway.app](https://railway.app) and sign up
-3. Click "New Project" → "Deploy from GitHub repo"
-4. Select your forked repository
-5. Railway will auto-deploy using the included configuration
 
 ## Contributing
 
