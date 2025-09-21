@@ -4,7 +4,7 @@ A simple FastAPI service that intelligently routes chat requests between differe
 
 ## 🚀 Live Demo
 
-**Try it now**: [https://your-app.railway.app](https://your-app.railway.app) (Mock Mode)
+**Try it now**: [https://your-app.vercel.app](https://your-app.vercel.app) (Mock Mode)
 
 > **Note**: The live demo uses simulated responses to showcase the routing logic. For real LLM responses, run locally with Ollama.
 
@@ -227,21 +227,31 @@ llm-smart-router/
 
 ## 🚀 Hosted Demo
 
-**Try it live**: [Deploy on Railway](https://railway.app) (free hosting)
+**Try it live**: Deploy on [Vercel](https://vercel.com) (free hosting)
 
 The hosted demo runs in **mock mode** with simulated responses to showcase the routing logic. For real LLM responses, run locally with Ollama.
 
-### Deploy to Railway
+### Deploy to Vercel
+
+1. Fork this repository
+2. Go to [vercel.com](https://vercel.com) and sign up
+3. Click "New Project" → "Import" from GitHub
+4. Select your forked repository
+5. Vercel will auto-deploy using the included `vercel.json` configuration
+
+The app will be available at `https://your-app-name.vercel.app`
+
+**Note**: The hosted version uses mock responses. Set `MOCK_MODE=false` locally for real LLM responses.
+
+### Alternative: Deploy to Railway
+
+You can also deploy to Railway:
 
 1. Fork this repository
 2. Go to [railway.app](https://railway.app) and sign up
 3. Click "New Project" → "Deploy from GitHub repo"
 4. Select your forked repository
 5. Railway will auto-deploy using the included configuration
-
-The app will be available at `https://your-app-name.railway.app`
-
-**Note**: The hosted version uses mock responses. Set `MOCK_MODE=false` locally for real LLM responses.
 
 ## Contributing
 
